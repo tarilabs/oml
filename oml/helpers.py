@@ -41,14 +41,16 @@ def push(
         "model_metadata.oml.json:application/x-config",
         "model_metadata.oml.yaml:application/x-config",
     ]
-    registry = Registry(insecure=True)
-    registry.push(
-        target=target,
-        files=files,
-        manifest_config="model_metadata.oml.json:application/x-config"
-    )
-    os.remove("model_metadata.oml.json")
-    os.remove("model_metadata.oml.yaml")
+    try:
+        registry = Registry(insecure=True)
+        registry.push(
+            target=target,
+            files=files,
+            manifest_config="model_metadata.oml.json:application/x-config"
+        )
+    finally:
+        os.remove("model_metadata.oml.json")
+        os.remove("model_metadata.oml.yaml")
     return None
 
 
