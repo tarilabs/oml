@@ -2,6 +2,12 @@
 
 ## Dev Notes
 
+### Zot (local)
+
+```sh
+bin/zot-darwin-arm64 serve examples/config-ui.json
+```
+
 ### Quay (local)
 
 using local quay with:
