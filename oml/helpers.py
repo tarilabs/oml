@@ -51,6 +51,7 @@ def push(
     os.remove("model_metadata.oml.yaml")
     return None
 
+
 def pull(
     target: str,
     outdir: str,
@@ -64,14 +65,12 @@ def get_config(
     target: str
 ) -> str:
     registry = OMLRegistry(insecure=True)
-    return registry.get_config(target)
+    return f'{{"reference":"{target}", "config": {registry.get_config(target)} }}' # this assumes OCI Manifest.Config later is JSON (per std spec)
 
-push("localhost:8080/matteo/artifact:latest", "model.joblib", name="Model Example", author="John Doe", license="Apache-2.0", accuracy=.85)
 
-oras_registry = Registry(insecure=True)
-oras_registry.pull(target="localhost:8080/matteo/artifact:latest", outdir="tmp/a")
-
-pull(target="localhost:8080/matteo/artifact:latest", outdir="tmp/b", media_types=["application/x-artifact"])
-
-print("config:", get_config(target="localhost:8080/matteo/artifact:latest"))
-
+def crawl(
+    targets: List[str]
+) -> str:
+    configs = map(get_config, targets)
+    joined = "[" + ", ".join(configs) + "]"
+    return joined

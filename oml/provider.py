@@ -62,4 +62,4 @@ class OMLRegistry(oras.provider.Registry):
                             for dir in dirs:
                                 os.rmdir(os.path.join(root, dir))
                         os.rmdir(temp_dir)
-                        print("Temporary directory and its contents have been removed.")
+                        # print("Temporary directory and its contents have been removed.")
