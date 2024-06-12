@@ -46,6 +46,7 @@ def push(
         registry.push(
             target=target,
             files=files,
+            manifest_annotations=model_metadata.to_annotations_dict(),
             manifest_config="model_metadata.oml.json:application/x-config"
         )
     finally:

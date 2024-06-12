@@ -10,7 +10,13 @@ bin/zot-darwin-arm64 serve examples/config-ui.json
 
 ### Quay (local)
 
-using local quay with:
+using local quay 
+
+```sh
+make local-dev-up
+```
+
+with:
 
 ```diff
 diff --git a/local-dev/stack/config.yaml b/local-dev/stack/config.yaml

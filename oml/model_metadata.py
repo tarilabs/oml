@@ -15,6 +15,22 @@ class ModelMetadata:
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), indent=4)
+    
+    def to_dict(self) -> str:
+        as_json = self.to_json()
+        return json.loads(as_json)
+    
+    def to_annotations_dict(self) -> str:
+        as_dict = self.to_dict()
+        result = {}
+        for k, v in as_dict.items():
+            if isinstance(v, str):
+                result[k] = v
+            elif v is None:
+                continue
+            else:
+                result[f"{k}+json"] = json.dumps(v) # post-fix "+json" for OCI annotation which is a str representing a json
+        return result
 
     @staticmethod
     def from_json(json_str: str) -> 'ModelMetadata':
