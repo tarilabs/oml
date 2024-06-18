@@ -5,6 +5,13 @@ metadata:
     app: practicalmargulis-pod
   name: practicalmargulis-pod
 spec:
+  initContainers:
+  - name: model-file
+    image: quay.io/mmortari/ml-iris:v1-modelcar
+    command: ['cp', "/models/model.joblib", "/shared/"]
+    volumeMounts:
+    - name: model-file
+      mountPath: /shared
   containers:
   - command:
     - python
@@ -26,9 +33,7 @@ spec:
     # tty: true
     volumeMounts:
     - mountPath: /models
-      name: model-files
+      name: model-file
   volumes:
-  - hostPath:
-      path: /models
-      type: Directory
-    name: model-files
+  - name: model-file
+    emptyDir: {}

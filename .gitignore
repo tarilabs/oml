@@ -4,3 +4,4 @@ __pycache__
 *.oml.yaml
 *.joblib
 tmp
+efi-variable-store

@@ -7,8 +7,6 @@ RUN set -eu; mkdir -p /usr/ssh && \
     echo 'AuthorizedKeysFile /usr/ssh/%u.keys .ssh/authorized_keys .ssh/authorized_keys2' >> /etc/ssh/sshd_config.d/30-auth-system.conf && \
     echo ${SSHPUBKEY} > /usr/ssh/root.keys && chmod 0600 /usr/ssh/root.keys
 
-COPY --chmod=0755 model.joblib models/model.joblib
-
 # MM: skipped growfs
 
 # Add quadlet files to setup system to automatically run AI application on boot
@@ -32,5 +30,6 @@ VOLUME /var/lib/containers
 # The quadlet .image file added above pulls following images with service startup
 
 RUN podman pull --root /usr/lib/containers/storage docker.io/kserve/sklearnserver:latest
+RUN podman pull --root /usr/lib/containers/storage quay.io/mmortari/ml-iris:v1-modelcar
 
 RUN podman system reset --force 2>/dev/null
