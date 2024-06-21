@@ -55,3 +55,9 @@ vfkit --cpus 2 --memory 2048 \
     --device virtio-gpu,width=1920,height=1080 \
     --gui
 ```
+
+```
+curl -s -H "Content-Type: application/json" -d @./data/input0.json http://192.168.64.3:8080/v2/models/model/infer | jq
+curl -s -H "Content-Type: application/json" -d @./data/input1.json http://192.168.64.3:8080/v2/models/model/infer | jq
+curl -s -H "Content-Type: application/json" -d @./data/input4.json http://192.168.64.3:8080/v2/models/model/infer | jq
+```
