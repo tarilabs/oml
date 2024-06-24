@@ -34,7 +34,7 @@ index 8104b060..eb447d26 100644
 
 ```
 podman build --build-arg "SSHPUBKEY=$(cat ~/.ssh/id_rsa.pub)" \
-           --security-opt label=disable \
+       --security-opt label=disable \
 	   --cap-add SYS_ADMIN \
 	   -f Containerfile.bootc \
 	   -t mmortari/ml-iris:v1-bootc .
