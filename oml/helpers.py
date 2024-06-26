@@ -4,6 +4,7 @@ from oml.model_metadata import ModelMetadata
 from oras.provider import Registry
 from oml.provider import OMLRegistry
 import os
+import urllib.request
 
 def write_content_to_file(filename: str, content_fn):
     try:
@@ -12,6 +13,12 @@ def write_content_to_file(filename: str, content_fn):
             f.write(content)
     except FileExistsError:
         raise RuntimeError(f"File '{filename}' already exists. Aborting TODO: demonstrator.")
+
+
+def download_file(uri):
+    file_name = os.path.basename(uri)
+    urllib.request.urlretrieve(uri, file_name)
+    return file_name
 
 
 class Helper:
@@ -54,7 +61,7 @@ class Helper:
             "model_metadata.oml.yaml:application/x-config",
         ]
         try:
-            self._registry.push(
+            return self._registry.push(
                 target=target,
                 files=files,
                 manifest_annotations=model_metadata.to_annotations_dict(),
@@ -63,7 +70,6 @@ class Helper:
         finally:
             os.remove("model_metadata.oml.json")
             os.remove("model_metadata.oml.yaml")
-        return None
 
 
     def pull(

@@ -5,3 +5,5 @@ __pycache__
 *.joblib
 tmp
 efi-variable-store
+*.onnx
+mr-integration/config/ml-metadata/metadata.sqlite.db

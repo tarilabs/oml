@@ -6,7 +6,7 @@ authors = ["Matteo Mortari <matteo.mortari@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.11" # temporary until we rebase mr on top of REST
 oras = "^0.1.30"
 pyyaml = "^6.0.1"
 
@@ -16,6 +16,14 @@ pytest = "^8.2.2"
 jq = "^1.7.0"
 scikit-learn = "^1.5.0"
 ipykernel = "^6.29.4"
+
+
+[tool.poetry.group.mrintegration]
+optional = true
+
+[tool.poetry.group.mrintegration.dependencies]
+ml-metadata = { url = "https://github.com/opendatahub-io/ml-metadata/releases/download/v1.14.0%2Bremote.1/ml_metadata-1.14.0+remote.1-py3-none-any.whl" }
+model-registry = "0.2.2a1"
 
 
 [build-system]
