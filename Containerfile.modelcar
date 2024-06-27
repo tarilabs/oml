@@ -3,7 +3,7 @@ FROM ghcr.io/oras-project/oras:v1.2.0 as builder
 RUN oras pull quay.io/mmortari/ml-iris:v1 
  
 
-FROM busybox
+FROM registry.access.redhat.com/ubi9/ubi-minimal:9.4
 
 RUN mkdir /models && chmod 775 /models
 COPY --from=builder /workspace /models/
