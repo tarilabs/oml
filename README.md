@@ -61,3 +61,28 @@ curl -s -H "Content-Type: application/json" -d @./data/input0.json http://192.16
 curl -s -H "Content-Type: application/json" -d @./data/input1.json http://192.168.64.3:8080/v2/models/model/infer | jq
 curl -s -H "Content-Type: application/json" -d @./data/input4.json http://192.168.64.3:8080/v2/models/model/infer | jq
 ```
+
+
+### Helpful KServe commands
+
+```
+kubectl get isvc my-inference-service
+NAME                   URL                                               READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
+my-inference-service   http://my-inference-service.default.example.com   True           100                              my-inference-service-predictor-00001   5m11s
+
+kubectl get svc istio-ingressgateway -n istio-system
+NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                                      AGE
+istio-ingressgateway   LoadBalancer   10.96.23.147   <pending>     15021:31088/TCP,80:30151/TCP,443:30327/TCP   28m
+
+INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}')
+kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
+```
+
+```
+export INGRESS_HOST=localhost
+export INGRESS_PORT=8080
+
+SERVICE_HOSTNAME=$(kubectl get isvc my-inference-service -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
+curl -s -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d @./data/input0.json http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/my-inference-service/infer | jq
+```
