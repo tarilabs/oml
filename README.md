@@ -78,6 +78,8 @@ INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="a
 kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
 ```
 
+and then,
+
 ```
 export INGRESS_HOST=localhost
 export INGRESS_PORT=8080
@@ -85,4 +87,41 @@ export INGRESS_PORT=8080
 SERVICE_HOSTNAME=$(kubectl get isvc my-inference-service -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 curl -s -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d @./data/input0.json http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/my-inference-service/infer | jq
+```
+
+### Helpful KServe RAW commands
+
+From https://kserve.github.io/website/latest/admin/kubernetes_deployment/#2-install-cert-manager
+
+Used
+1. skipped Istio
+2. install Cert manager
+3. etc.
+
+```
+kubectl port-forward -n default service/my-inference-service-predictor 8080:80
+```
+
+and then,
+
+```
+export INGRESS_HOST=localhost
+export INGRESS_PORT=8080
+curl -s -H "Content-Type: application/json" -d @./data/input0.json http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/my-inference-service/infer | jq
+```
+
+#### Helpful KServe RAW commands using OCI-Artifact CSI
+
+Applied CSI
+
+```
+kubectl port-forward -n default service/my-inference-ociartifact-predictor 8080:80
+```
+
+and then,
+
+```
+export INGRESS_HOST=localhost
+export INGRESS_PORT=8080
+curl -s -H "Content-Type: application/json" -d @./data/input0.json http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/my-inference-ociartifact/infer | jq
 ```

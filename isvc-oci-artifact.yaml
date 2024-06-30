@@ -1,0 +1,10 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: my-inference-ociartifact
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: oci-artifact://quay.io/mmortari/ml-iris:v1

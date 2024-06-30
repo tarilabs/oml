@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # from https://kserve.github.io/website/latest/modelserving/storage/oci/#enabling-modelcars
 # Script to enable Modelcars
 # Fetch the current storageInitializer configuration
