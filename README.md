@@ -1,3 +1,5 @@
+# ⏩ moved to https://github.com/tarilabs/omlmd ⏩
+
 🚧 _this is a work-in-progress demonstrator_ 🚧
 
 ## Dev Notes
